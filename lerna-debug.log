@@ -1,0 +1,23 @@
+0 silly argv {
+0 silly argv   _: [ 'run' ],
+0 silly argv   parallel: true,
+0 silly argv   lernaVersion: '4.0.0',
+0 silly argv   '$0': '/Users/taekyoungmoon/Documents/Projects/micro-frontend-architecture/node_modules/.bin/lerna',
+0 silly argv   script: 'clean'
+0 silly argv }
+1 notice cli v4.0.0
+2 verbose rootPath /Users/taekyoungmoon/Documents/Projects/micro-frontend-architecture
+3 info versioning independent
+4 error JSONError: Unexpected token "}" (0x7D) in JSON at position 702 while parsing near "...ttier\": \"^2.5.1\",\n  },\n  \"scripts\": {\n  ..." in container/package.json
+4 error
+4 error [0m [90m 23 |[39m     [32m"@types/react-router-dom"[39m[33m:[39m [32m"^5.3.3"[39m[33m,[39m[0m
+4 error [0m [90m 24 |[39m     [32m"prettier"[39m[33m:[39m [32m"^2.5.1"[39m[33m,[39m[0m
+4 error [0m[31m[1m>[22m[39m[90m 25 |[39m   }[33m,[39m[0m
+4 error [0m [90m    |[39m   [31m[1m^[22m[39m[0m
+4 error [0m [90m 26 |[39m   [32m"scripts"[39m[33m:[39m {[0m
+4 error [0m [90m 27 |[39m     [32m"start"[39m[33m:[39m [32m"webpack-cli serve"[39m[33m,[39m[0m
+4 error [0m [90m 28 |[39m     [32m"build"[39m[33m:[39m [32m"webpack --mode production"[39m[33m,[39m[0m
+4 error
+4 error     at parseJson (/Users/taekyoungmoon/Documents/Projects/micro-frontend-architecture/node_modules/parse-json/index.js:29:21)
+4 error     at parse (/Users/taekyoungmoon/Documents/Projects/micro-frontend-architecture/node_modules/load-json-file/index.js:15:9)
+4 error     at module.exports (/Users/taekyoungmoon/Documents/Projects/micro-frontend-architecture/node_modules/load-json-file/index.js:18:47)

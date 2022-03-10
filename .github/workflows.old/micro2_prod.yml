@@ -1,0 +1,78 @@
+name: Micro2 Production Deploy
+
+on:
+  push:
+    branches: main
+    paths: 'services/micro2/**'
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./services/micro2
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+    
+    steps:
+      - name: Checkout source code.
+        uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+          always-auth: true
+    
+      - name: Cache node modules
+        uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: 'node_modules'
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install dependencies
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
+        run: yarn
+        working-directory: ${{ env.working-directory }}
+
+      - name: Run Bundle
+        run: yarn build:prod
+        working-directory: ${{ env.working-directory }}
+
+
+      # - name: Configure AWS Credentials
+      #   uses: aws-actions/configure-aws-credentials@v1
+      #   with:
+      #     aws-access-key-id: ${{ secrets. AWS_ACCESS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets. AWS_SECRET_ACCESS_KEY }}
+      #     aws-region: ap-northeast-2
+
+      # - name: Copy files to the s3 website content bucket
+      #   run:
+      #     aws s3 sync container/dist s3://${{ secrets.AWS_DEV_BUCKET_NAME }}/container/
+      #     # aws s3 sync container/dist s3://moin-micro-frontend-system/container/
+
+      - name: Deploy to S3
+        uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --follow-symlinks --delete
+        env:
+          AWS_S3_BUCKET: ${{ secrets.AWS_DEV_BUCKET_NAME }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ap-northeast-2
+          DEST_DIR: 'micro2/'
+          SOURCE_DIR: 'services/micro2/dist/'
+
+      - name: Invalidate the file from edge caches
+        uses: chetan/invalidate-cloudfront-action@master
+        env:
+          DISTRIBUTION: ${{ secrets.AWS_DEV_DISTRIBUTION }}
+          PATHS: '/micro2/*'
+          AWS_REGION: 'ap-northeast-2'
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
