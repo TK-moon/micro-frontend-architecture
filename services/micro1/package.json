@@ -4,15 +4,14 @@
   "private": true,
   "homepage": "/",
   "devDependencies": {
-    "html-webpack-plugin": "5.5.0",
-    "serve": "12.0.1"
+    "html-webpack-plugin": "5.5.0"
   },
   "scripts": {
     "start": "webpack-cli serve --config ./webpack/webpack.config.js",
     "build:local": "webpack --config ./webpack/webpack.config.js",
     "build:dev": "webpack --mode development --config ./webpack/webpack.config.js",
     "build:prod": "webpack --mode production --config ./webpack/webpack.config.js",
-    "serve": "serve dist -p 3002",
+    "serve": "serve dist -p 3002 -s",
     "clean": "rm -rf dist"
   },
   "dependencies": {

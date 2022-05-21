@@ -21,7 +21,6 @@
     "eslint-plugin-react-hooks": "^4.3.0",
     "html-webpack-plugin": "5.5.0",
     "prettier": "^2.5.1",
-    "serve": "12.0.1",
     "ts-loader": "^9.2.6",
     "typescript": "^4.5.5"
   },
@@ -30,7 +29,7 @@
     "build:local": "webpack --config ./webpack/webpack.config.js",
     "build:dev": "webpack --mode development --config ./webpack/webpack.config.js",
     "build:prod": "webpack --mode production --config ./webpack/webpack.config.js",
-    "serve": "serve dist -p 3001",
+    "serve": "serve dist -p 3001 -s",
     "clean": "rm -rf dist"
   },
   "dependencies": {
