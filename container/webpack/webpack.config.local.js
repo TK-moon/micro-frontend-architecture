@@ -10,15 +10,4 @@ module.exports = {
     port: DEV_PORT,
     historyApiFallback: true,
   },
-  module: {
-    rules: [
-      {
-        test: /\.(tsx|ts)$/i,
-        use: [
-          { loader: 'ts-loader' },
-        ],
-        exclude: /node_modules/,
-      },
-    ],
-  },
 }

@@ -5,15 +5,4 @@ module.exports = {
   //   static: { directory: path.join(__dirname, 'dist') },
   //   port: DEV_PORT,
   // },
-  module: {
-    rules: [
-      {
-        test: /\.(tsx|ts)$/i,
-        use: [
-          { loader: 'ts-loader' },
-        ],
-        exclude: /node_modules/,
-      },
-    ],
-  },
 }
