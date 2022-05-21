@@ -36,14 +36,15 @@ module.exports = (env, argv) => {
     module: {
       rules: [
         {
-          test: /\.jsx?$/,
-          loader: 'babel-loader',
-          exclude: /node_modules/,
+          test: /\.(jsx|js)$/i,
+          loader: 'esbuild-loader',
           options: {
-            presets: ['@babel/preset-react'],
+            loader: 'jsx',
+            target: 'es2015'
           },
-        },
-      ],
+          exclude: /node_modules/,
+        }
+      ]
     },
     plugins: [
       new ModuleFederationPlugin({

@@ -4,6 +4,7 @@
   "useWorkspaces": true,
   "packages": [
     "container",
-    "services/micro1"
+    "services/micro1",
+    "services/micro2"
   ]
 }
