@@ -30,6 +30,9 @@ module.exports = (env, argv) => {
     optimization: {
       runtimeChunk: false
     },
+    resolve: {
+      extensions: ['.js', '.jsx'],
+    },
     module: {
       rules: [
         {
