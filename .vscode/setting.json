@@ -1,3 +1,6 @@
 {
-  "eslint.workingDirectories": ["container", "service/*"]
+  "eslint.workingDirectories": ["container", "service/*"],
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false
 }
