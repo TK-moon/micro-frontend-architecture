@@ -1,7 +1,7 @@
-import React from 'react'
+import React from "react"
 
 const Test2 = () => {
-  console.log('Page2')
+  console.log("Page2")
 
   return (
     <div>

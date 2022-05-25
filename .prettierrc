@@ -5,5 +5,7 @@
   "singleQuote": false,
   "jsxSingleQuote": false,
   "arrowParens": "always",
-  "printWidth": 80
+  "printWidth": 80,
+  "singleAttributePerLine": true,
+  "trailingComma": "all"
 }
