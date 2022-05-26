@@ -3,6 +3,9 @@
 
 Webpack5의 Module Federation Plugin을 이용하여 React 기반 마이크로 프론트엔드 아키텍쳐 구현
 
+CSR인 AWS S3와 CloudFront 조합으로 기본적인 Micro Frontend Architecture 동작을 확인.
+- React.lazy로 마이크로 프론트엔드 컴포넌트를 불러온 후 Prop 전달 및 react-router-dom을 이용한 라우팅이 가능한 것을 확인.
+
 ## Install
 ```
 yarn install
