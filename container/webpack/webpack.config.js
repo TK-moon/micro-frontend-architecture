@@ -11,6 +11,8 @@ const webpackDevConfig = require("./webpack.config.dev")
 const webpackProdConfig = require("./webpack.config.prod")
 const webpackLocalConfig = require("./webpack.config.local")
 
+const deps = require("../package.json").dependencies
+
 function getRemoteEntryUrl(appName) {
   switch (appName) {
     case "micro1":
@@ -86,7 +88,7 @@ module.exports = (env, argv) => {
         },
         shared: {
           react: { singleton: true },
-          "react-dom": { singleton: true },
+          "react-dom": { singleton: true, requiredVersion: deps["react-dom"] },
           "react-router-dom": { singleton: true },
         },
       }),
