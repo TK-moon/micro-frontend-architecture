@@ -1,18 +1,21 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { ModuleFederationPlugin } = require('webpack').container;
-const { MFLiveReloadPlugin } = require("@module-federation/fmr");
-const { merge } = require('webpack-merge');
-const path = require('path');
+const HtmlWebpackPlugin = require("html-webpack-plugin")
+const { ModuleFederationPlugin } = require("webpack").container
+const { MFLiveReloadPlugin } = require("@module-federation/fmr")
+const { merge } = require("webpack-merge")
+const { ESBuildMinifyPlugin } = require("esbuild-loader")
 
-const webpackDevConfig = require('./webpack.config.dev')
-const webpackProdConfig = require('./webpack.config.prod')
-const webpackLocalConfig = require('./webpack.config.local')
+const webpackDevConfig = require("./webpack.config.dev")
+const webpackProdConfig = require("./webpack.config.prod")
+const webpackLocalConfig = require("./webpack.config.local")
 
 const getWebpackConfigByMode = (mode) => {
-  switch(mode) {
-    case 'development': return webpackDevConfig
-    case 'production': return webpackProdConfig
-    default: return webpackLocalConfig
+  switch (mode) {
+    case "development":
+      return webpackDevConfig
+    case "production":
+      return webpackProdConfig
+    default:
+      return webpackLocalConfig
   }
 }
 
@@ -21,43 +24,47 @@ module.exports = (env, argv) => {
   const PRODUCTION_MODE = argv.mode // production | development | none(localhost)
 
   const commonConfig = {
-    entry: './src/index',
+    entry: "./src/index",
     output: {
-      filename: '[name].[chunkhash].js',
-      publicPath: 'auto',
+      filename: "[name].[chunkhash].js",
+      publicPath: "auto",
       clean: true,
     },
     optimization: {
-      runtimeChunk: false
+      runtimeChunk: false,
+      minimizer: [new ESBuildMinifyPlugin({ target: "es2015" })],
     },
     resolve: {
-      extensions: ['.js', '.jsx'],
+      extensions: [".js", ".jsx"],
     },
     module: {
       rules: [
         {
           test: /\.(jsx|js)$/i,
-          loader: 'esbuild-loader',
+          loader: "esbuild-loader",
           options: {
-            loader: 'jsx',
-            target: 'es2015'
+            loader: "jsx",
+            target: "es2015",
           },
           exclude: /node_modules/,
-        }
+        },
       ],
     },
     plugins: [
       new ModuleFederationPlugin({
-        name: 'micro2',
-        library: { type: 'var', name: 'micro2' },
-        filename: 'remoteEntry.js',
+        name: "micro2",
+        library: { type: "var", name: "micro2" },
+        filename: "remoteEntry.js",
         exposes: {
-          './App': './src/App',
+          "./App": "./src/App",
         },
-        shared: { react: { singleton: true }, 'react-dom': { singleton: true } },
+        shared: {
+          react: { singleton: true },
+          "react-dom": { singleton: true },
+        },
       }),
       new HtmlWebpackPlugin({
-        template: './public/index.html',
+        template: "./public/index.html",
       }),
     ],
   }
@@ -70,9 +77,9 @@ module.exports = (env, argv) => {
         port: 3003, // the port your app runs on
         container: "micro2", // the name of your app, must be unique
         standalone: false, // false uses chrome extention
-      })
+      }),
     )
   }
-  
-  return merge(commonConfig, webpackConfig);
-};
+
+  return merge(commonConfig, webpackConfig)
+}

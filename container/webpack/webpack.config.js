@@ -3,6 +3,8 @@ const { ModuleFederationPlugin } = require("webpack").container
 const { merge } = require("webpack-merge")
 const path = require("path")
 const dotenv = require("dotenv")
+
+const { ESBuildMinifyPlugin } = require("esbuild-loader")
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin")
 
 const webpackDevConfig = require("./webpack.config.dev")
@@ -60,6 +62,9 @@ module.exports = (env, argv) => {
         "@": path.resolve(__dirname, "./src"),
       },
     },
+    optimization: {
+      minimizer: [new ESBuildMinifyPlugin({ target: "es2015" })],
+    },
     module: {
       rules: [
         {
@@ -82,7 +87,6 @@ module.exports = (env, argv) => {
         shared: {
           react: { singleton: true },
           "react-dom": { singleton: true },
-          "react-router-dom": { singleton: true },
           "react-router-dom": { singleton: true },
         },
       }),
